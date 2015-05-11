@@ -9,18 +9,19 @@ package DataLayer;
  *
  * @author hasaan
  */
+
 //Singleton-Class
 public class DataHandler {
+    private Settings settings=null;
+    private DataHandler(){
+        settings = new Settings();
+    }
+
     
     private static DataHandler instance = null;
-    
-    private DataHandler(){
-        
-    }
     public static DataHandler getInstance(){
         if(instance==null)
             instance = new DataHandler();
         return instance;
     }
-
 }

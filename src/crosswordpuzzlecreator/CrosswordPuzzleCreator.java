@@ -5,6 +5,8 @@
  */
 package crosswordpuzzlecreator;
 
+import PresentationLayer.CreatePuzzleJFrame;
+
 /**
  *
  * @author hasaan
@@ -15,7 +17,7 @@ public class CrosswordPuzzleCreator {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        new CreatePuzzleJFrame().setVisible(true);
     }
     
 }
