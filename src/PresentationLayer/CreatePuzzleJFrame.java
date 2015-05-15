@@ -5,8 +5,13 @@
  */
 package PresentationLayer;
 
+import BusinessLogic.Controller;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import javax.swing.JPanel;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -32,10 +37,19 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
         //make jSpinners non-editable
         ((DefaultEditor) boxSizejSpinner.getEditor()).getTextField().setEditable(false);
         ((DefaultEditor) gridSizejSpinner.getEditor()).getTextField().setEditable(false);
-        puzzlejTable.setGridColor(Color.BLACK);
-        //set table model
-//        DefaultTableModel model = new javax.swing.table.DefaultTableModel(lastGridSize, lastGridSize);
-//        puzzlejTable.setModel(model);
+        puzzlejTable.setGridColor(Color.BLACK);   
+
+        //make puzzle Jpanel scrollable
+
+//        JPanel panel = puzzlejPanel;
+//                Container c = frame.getContentPane();
+//                panel.setSize(100,100);
+//                panel.setLayout(new GridLayout(1000,1));
+//                for(int i = 0; i<1000;i++)
+//                panel.add(new JLabel("JLabel "+i));
+//
+//                JScrollPane jsp = new JScrollPane(panel);
+//                c.add(jsp);
         
     }
 
@@ -62,8 +76,12 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
         puzzlejScrollPane = new javax.swing.JScrollPane();
         puzzlejTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        acrossCluesjTextArea = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        downCluesjTextArea = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
+        generatePuzzlejButton = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -100,7 +118,7 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
         TitlejLabel.setText("Crossword Puzzle Creator");
         TitlejLabel.setToolTipText("");
 
-        gridSizejSpinner.setModel(new javax.swing.SpinnerNumberModel(4, 4, 10, 1));
+        gridSizejSpinner.setModel(new javax.swing.SpinnerNumberModel(4, 4, 20, 1));
         gridSizejSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 gridSizejSpinnerStateChanged(evt);
@@ -192,6 +210,7 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
         puzzlejTable.setAutoscrolls(false);
         puzzlejTable.setShowGrid(true);
         puzzlejTable.setTableHeader(null);
+        puzzlejScrollPane.setViewportView(puzzlejTable);
 
         javax.swing.GroupLayout puzzlejPanelLayout = new javax.swing.GroupLayout(puzzlejPanel);
         puzzlejPanel.setLayout(puzzlejPanelLayout);
@@ -205,18 +224,36 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
             puzzlejPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(puzzlejPanelLayout.createSequentialGroup()
                 .addComponent(puzzlejScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 288, Short.MAX_VALUE))
         );
+
+        acrossCluesjTextArea.setColumns(20);
+        acrossCluesjTextArea.setRows(5);
+        jScrollPane1.setViewportView(acrossCluesjTextArea);
+
+        downCluesjTextArea.setColumns(20);
+        downCluesjTextArea.setRows(5);
+        jScrollPane2.setViewportView(downCluesjTextArea);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 452, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -234,10 +271,10 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jButton3.setText("Generate");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        generatePuzzlejButton.setText("Generate");
+        generatePuzzlejButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                generatePuzzlejButtonActionPerformed(evt);
             }
         });
 
@@ -256,7 +293,7 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(jButton4)
                 .addGap(29, 29, 29)
-                .addComponent(jButton3)
+                .addComponent(generatePuzzlejButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -264,7 +301,7 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(generatePuzzlejButton, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -307,9 +344,31 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
         new SettingsJFrame(this).setVisible(true);
     }//GEN-LAST:event_settingsjButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void generatePuzzlejButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePuzzlejButtonActionPerformed
+
+    Controller controller = Controller.getInstance();
+    int gridSize = (int)gridSizejSpinner.getValue();
+    
+    Character[][] puzzleGrid = new Character[gridSize][gridSize];
+    LinkedHashMap<String, String>  acrossAnsClueHM = new LinkedHashMap<String, String>();
+    LinkedHashMap<String, String> downAnsClueHM = new LinkedHashMap<String, String>();
+    
+    controller.generatePuzzle(puzzleGrid,acrossAnsClueHM, downAnsClueHM);
+    
+    //set table model
+        String[] nulls = new String[puzzleGrid.length];
+        DefaultTableModel model = new javax.swing.table.DefaultTableModel(   puzzleGrid, nulls);
+        puzzlejTable.setModel(model);
+    //
+      for(String key: acrossAnsClueHM.keySet()){
+          acrossCluesjTextArea.append(acrossAnsClueHM.get(key)+"\n");
+      }
+      for(String key: downAnsClueHM.keySet()){
+          downCluesjTextArea.append(downAnsClueHM.get(key)+"\n");
+      }
+    
+    
+    }//GEN-LAST:event_generatePuzzlejButtonActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.setEnabled(false);
@@ -364,17 +423,21 @@ public class CreatePuzzleJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ControlsjPanel;
     private javax.swing.JLabel TitlejLabel;
+    private javax.swing.JTextArea acrossCluesjTextArea;
     private javax.swing.JLabel boxSizejLabel;
     private javax.swing.JSpinner boxSizejSpinner;
+    private javax.swing.JTextArea downCluesjTextArea;
+    private javax.swing.JButton generatePuzzlejButton;
     private javax.swing.JLabel gridSizejLabel;
     private javax.swing.JSpinner gridSizejSpinner;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel puzzlejPanel;
     private javax.swing.JScrollPane puzzlejScrollPane;
     private javax.swing.JTable puzzlejTable;
